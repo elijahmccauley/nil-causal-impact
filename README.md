@@ -234,3 +234,55 @@ NOT only wins — too noisy.
 Even with recruiting classes:
 
 ~2,000–3,000 rows total.
+
+---
+
+# File structure
+
+nil-causal-impact/
+│
+├── README.md
+├── requirements.txt
+├── .gitignore
+│
+├── data/
+│   ├── raw/
+│   │   ├── recruiting/
+│   │   ├── performance/
+│   │   └── nil/
+│   │
+│   ├── interim/
+│   │   └── merged_panel.csv
+│   │
+│   └── processed/
+│       └── final_panel_dataset.csv
+│
+├── src/
+│   ├── scraping/
+│   │   ├── scrape_recruiting.py
+│   │   ├── scrape_performance.py
+│   │   └── scrape_nil.py
+│   │
+│   ├── data_cleaning/
+│   │   ├── clean_recruiting.py
+│   │   ├── clean_performance.py
+│   │   └── merge_panel.py
+│   │
+│   ├── modeling/
+│   │   ├── did_model.py
+│   │   ├── event_study.py
+│   │   └── robustness_checks.py
+│   │
+│   └── utils/
+│       ├── team_name_mapping.py
+│       └── helpers.py
+│
+├── notebooks/
+│   ├── exploratory_analysis.ipynb
+│   └── model_diagnostics.ipynb
+│
+└── outputs/
+    ├── figures/
+    ├── tables/
+    └── regression_results/
+
