@@ -3,6 +3,7 @@ import numpy as np
 from datetime import datetime, timedelta
 import ast
 from scraping import performance_scraper as ps
+import json
 
 conference_mapping = {
     "ACC": 1,
@@ -20,11 +21,13 @@ fbs_conferences = {"8","5","1","4","9","151","17","15","37"}
 def build_game_stats(years):
     all_rows = []
     for year in years:
-        games_df = pd.read_csv(f"../../data/raw/cfb_games_{year}.csv")
+        print(f"Processing year: {year}")
+        with open(f"../data/raw/cfb_games_{year}.json") as f:
+            games = json.load(f)
         
-        for _, row in games_df.iterrows():
-            competitions = ast.literal_eval(row["competitions"])
-            status = ast.literal_eval(row["status"])
+        for game in games:
+            competitions = game["competitions"]
+            status = game["status"]
             
             if not status["type"]["completed"]:
                 continue
@@ -129,7 +132,6 @@ def calculate_sos(df, season_stats):
         on=["opponent", "year"],
         how="left"
     )
-    print(sos_df["opp_win_pct"].isna().sum())
 
     sos = (
         sos_df.groupby(["team", "year", "conference"])
@@ -142,7 +144,7 @@ def save_outputs(season_stats, sos):
     season_stats = season_stats.merge(sos, on=["team", "year", "conference"], how="left")
 
 
-    season_stats.to_csv("../../data/processed/cfb_season_stats.csv", index=False)
+    season_stats.to_csv("../data/processed/cfb_season_stats.csv", index=False)
 
 
 if __name__ == "__main__":
