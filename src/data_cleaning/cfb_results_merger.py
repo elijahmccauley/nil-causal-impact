@@ -15,6 +15,8 @@ conference_mapping = {
     "Mountain West": 17,
     "Sun Belt": 37,
     "American (AAC)": 151,
+    "C-USA": 12,
+    "Independents": 18,
 }
 fbs_conferences = {"8","5","1","4","9","151","17","15","37"}
 
